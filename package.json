@@ -1,0 +1,42 @@
+{
+  "name": "platziverse",
+  "version": "1.0.0",
+  "description": "A Simple I/O Plataform ",
+  "main": "index.js",
+  "scripts": {
+    "test": "DEBUG=platziverse:* nyc --reporter=lcov ava tests/ --verbose",
+    "setup": "DEBUG=platziverse:* node setup.js",
+    "lint": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rastalextremo/platziverse.git"
+  },
+  "keywords": [
+    "rastalextremo",
+    "platziverse"
+  ],
+  "author": "Alexander Velasquez <rastalextremo@gmail.com> (http://www.instagram.com/rastalextremo)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rastalextremo/platziverse/issues"
+  },
+  "homepage": "https://github.com/rastalextremo/platziverse#readme",
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "nyc": "^11.6.0",
+    "proxyquire": "^2.0.1",
+    "sinon": "^4.5.0",
+    "sqlite3": "^4.0.0",
+    "standard": "^11.0.1"
+  },
+  "dependencies": {
+    "chalk": "^2.3.2",
+    "debug": "^3.1.0",
+    "defaults": "^1.0.3",
+    "inquirer": "^5.2.0",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.37.6"
+  }
+}
