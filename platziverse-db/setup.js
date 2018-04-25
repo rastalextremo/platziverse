@@ -16,7 +16,6 @@ async function setup () {
   })
 
   if(!flag) {
-
     const answer = await prompt([
       {
         type: 'confirm',
@@ -29,7 +28,7 @@ async function setup () {
       return console.log('No hacemos nada entonces...')
     }
   }
-  
+
   const config = {
     database: process.env.DB_NAME || 'platziverse',
     username: process.env.DB_USERNAME || 'platzi',
