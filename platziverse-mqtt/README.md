@@ -1,5 +1,14 @@
 # platziverse-mqtt
 
+## Instalación
+
+```
+  npm install --save-dev standard nodemon
+  npm i debug mosca redis chalk
+  sudo apt-get install redis-server
+```
+  
+
 ## `agent/connected`
 
 ``` js
