@@ -6,6 +6,9 @@
   npm install --save-dev standard nodemon
   npm i debug mosca redis chalk
   sudo apt-get install redis-server
+  sudo npm install -g mqtt
+
+  Para probar MQTT desde consola: mqtt pub -t 'agent/message' -h localhost -m 'Hello Platziverse'
 ```
   
 
