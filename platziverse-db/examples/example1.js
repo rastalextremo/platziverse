@@ -1,15 +1,10 @@
 'use strict'
 
 const db = require('../index')
+const conf = require('../config-db.js')
 
 async function run() {
-  const config = {
-    database: process.env.DB_NAME || 'platziverse',
-    username: process.env.DB_USERNAME || 'platzi',
-    password: process.env.DB_PASS || 'platzi',
-    host: process.env.DB_HOST || 'localhost',
-    dialect: 'postgres'
-  }
+  const config = conf(false)
 
   const {Agent, Metric} = await db(config).catch(handleFatalError)
 
