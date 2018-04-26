@@ -39,8 +39,34 @@ server.on('clientConnected', client => {
   clients.set(client.id, null)
 })
 
-server.on('clientDisconnected', client => {
+server.on('clientDisconnected', async client => {
   debug(`Cliente Desconectado: ${client.id}`) //id generado automaticamente
+  const agent = clients.get(client.id)
+
+  if (agent) {
+    //Marcar el agente como desconectado
+    agent.connected = false
+
+    try {
+      await Agent.createOrUpdate(agent)
+    } catch (e) {
+      return handleError(e)
+    }
+
+    //Borrar el cliente de la lista de clientes
+    clients.delete(client.id)
+
+    server.publish({
+      topic: 'agent/disconnected',
+      payload: JSON.stringify({
+        agent: {
+          uuid: agent.uuid
+        }
+      })
+    })
+
+    debug(`El Cliente con el id ${client.id} asociado al agente ${agent.uuid} fue marcado como desconectado`)
+  }
 })
 
 server.on('published', async (packet, client) => {
