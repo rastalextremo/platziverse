@@ -1,5 +1,3 @@
-import { SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG } from 'constants';
-
 'use strict'
 
 const debug = require('debug')('platziverse:mqtt')
@@ -48,8 +46,9 @@ server.on('clientDisconnected', client => {
 server.on('published', async (packet, client) => {
   debug(`Recibido: ${packet.topic}`)
 
-  switch (package.topic) {
+  switch (packet.topic) {
     case 'agent/connected':
+      break
     case 'agent/disconnected':
       debug(`Payload: ${packet.payload}`)
       break
@@ -84,6 +83,18 @@ server.on('published', async (packet, client) => {
               }
             })
           })
+        }
+
+        for(let metric of payload.metrics) {
+          let m
+
+          try {
+            m = await Metric.create(agent.uuid, metric)
+          } catch (e) {
+            return handleError(e)
+          }
+
+          debug(`Metric ${m.id} del agente ${agent.uuid} ha sido guardada`)
         }
       }
       break
