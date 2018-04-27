@@ -9,6 +9,8 @@
   sudo npm install -g mqtt
 
   Para probar MQTT desde consola: mqtt pub -t 'agent/message' -h localhost -m 'Hello Platziverse'
+
+  Para probar el servicio de inserción: mqtt pub -t 'agent/message' -m '{"agent": {"uuid": "yyy", "name": "test", "username": "platzi", "pid": 10,"hostname": "PlatziMexico"}, "metrics": [{"type": "memory", "value": "64"},{"type": "HardDisk", "value": "1TB2"}]}'
 ```
   
 

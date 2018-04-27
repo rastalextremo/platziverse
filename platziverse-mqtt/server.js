@@ -129,13 +129,13 @@ server.on('published', async (packet, client) => {
 
 server.on('error', handleFatalError)
 
-function handleFatalError () {
+function handleFatalError (err) {
   console.error(`${chalk.red('Error Fatal')} ${err.message}`)
   console.error(err.stack)
   process.exit(1)
 }
 
-function handleError () {
+function handleError (err) {
   console.error(`${chalk.red('Error')} ${err.message}`)
   console.error(err.stack)
 }
