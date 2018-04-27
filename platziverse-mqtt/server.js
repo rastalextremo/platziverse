@@ -74,13 +74,13 @@ server.on('published', async (packet, client) => {
 
   switch (packet.topic) {
     case 'agent/connected':
-      break
+    break
     case 'agent/disconnected':
       debug(`Payload: ${packet.payload}`)
-      break
+    break
     case 'agent/message':
-        debug(`Payload ${packet.payload}`)
-        const payload = parsePayload(packet.payload)
+      debug(`Payload ${packet.payload}`)
+      const payload = parsePayload(packet.payload)
 
       if(payload) {
         payload.agent.connected = true
@@ -111,19 +111,21 @@ server.on('published', async (packet, client) => {
           })
         }
 
-        for(let metric of payload.metrics) {
-          let m
+        let m
+        let promises = []
+        
+        payload.metrics.forEach(metric => {
+          promises.push(Metric.create(agent.uuid, metric))
+        })
 
-          try {
-            m = await Metric.create(agent.uuid, metric)
-          } catch (e) {
-            return handleError(e)
-          }
-
-          debug(`Metric ${m.id} del agente ${agent.uuid} ha sido guardada`)
-        }
+        try {
+          m = await Promise.all(promises)
+          debug(`Las metricas del agente ${agent.uuid} han sido guardadas`)        
+        } catch (e) {
+          return handleError(e)
+        }        
       }
-      break
+    break
   }
 })
 

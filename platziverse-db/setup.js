@@ -30,7 +30,7 @@ async function setup () {
     }
   }
 
-  const config = conf(false)
+  const config = conf(true)
 
   await db(config).catch(handleFatalError)
 
