@@ -9,7 +9,7 @@ const setupMetric = require('./lib/lib_metric')
 
 module.exports = async function (config) {
   config = defaults(config, {
-    dialect: 'sqlite',
+    dialect: 'mysql',
     pool: {
       max: 10,
       min: 0,

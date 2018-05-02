@@ -24,6 +24,7 @@
   "homepage": "https://github.com/rastalextremo/platziverse#readme",
   "devDependencies": {
     "ava": "^0.25.0",
+    "mysql2": "^1.5.3",
     "nyc": "^11.6.0",
     "proxyquire": "^2.0.1",
     "sinon": "^4.5.0",
