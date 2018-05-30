@@ -2,12 +2,12 @@
 
 const debug = require('debug')('platziverse:agent')
 const mqtt = require('mqtt')
+const util = require('util')
 const defaults = require('defaults')
 const EventEmitter = require('events')
-const { parsePayload } = require('../platziverse-mqtt/utils')
+const { parsePayload } = require('./utils')
 const uuid = require('uuid')
 const os = require('os')
-const util = require('util')
 
 const options = {
   name: 'untitled',
@@ -66,23 +66,23 @@ class PlatziverseAgent extends EventEmitter {
               metrics: [],
               timestamp: new Date().getTime()
             }
-          }
 
-          for (let [metric, fn] of this._metrics) {
-            if (fn.leghth == 1) {
-              fn = util.promisify(fn)
+            for (let [metric, fn] of this._metrics) {
+              if (fn.length === 1) {
+                fn = util.promisify(fn)
+              }
+
+              message.metrics.push({
+                type: metric,
+                value: await Promise.resolve(fn())
+              })
             }
 
-            message.metrics.push({
-              type: metric,
-              value: await Promise.resolve(fn())
-            })
+            debug('Sending', message)
+
+            this._client.publish('agent/message', JSON.stringify(message))
+            this.emit('message', message)
           }
-
-          debug('Sending', message)
-
-          this._client.publish('agent/message', JSON.stringify(message))
-          this.emit('message', message)
         }, opts.interval)
       })
 
